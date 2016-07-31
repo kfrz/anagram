@@ -1,0 +1,19 @@
+image: ruby:2.3
+
+services:
+  - redis
+
+before_script:
+  - bundle install --path /cache
+
+test:
+  script:
+  - rspec
+
+production:
+  type: deploy
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=anagram-kf --api-key=$HEROKU_PRODUCTION_API_KEY
+  only:
+    - tags
