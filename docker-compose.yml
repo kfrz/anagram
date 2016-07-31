@@ -1,0 +1,13 @@
+redis:
+  image: redis
+
+web:
+  build: .
+  links:
+    - redis
+  volumes:
+    - .:/app
+  ports:
+    - '3000:3000'
+  env_file:
+    - .anagram.env
