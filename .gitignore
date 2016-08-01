@@ -2,3 +2,4 @@
 .rspec
 /.bundle
 #*
+.byebug_history
