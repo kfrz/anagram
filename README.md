@@ -42,6 +42,7 @@ The project should respond on the following endpoints:
 - `GET /anagrams/:word.json?number_of_results=5`:
   - Returns a JSON array of English-language words that are anagrams of the word passed in the URL.
   - Respects a query param `?number_of_results` that indicates the maximum number of results to return. 
+
 - `DELETE /words/:word.json`: Deletes a single word from the corpus.
 - `DELETE /anagrams/:word.json` Use to delete all of that word's anagrams.
 - `DELETE /words.json`: Deletes all contents of the corpus.
