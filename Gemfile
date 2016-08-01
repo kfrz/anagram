@@ -24,6 +24,7 @@ group :development do
   gem 'guard-bundler'
   gem 'guard-rack'
   gem 'rubocop'
+  gem 'byebug'
 end
 
 group :test do
