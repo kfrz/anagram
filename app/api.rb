@@ -3,5 +3,7 @@ module Anagram
     format :json
 
     mount ::Anagram::Ping
+    mount ::Anagram::Word
+    mount ::Anagram::Anagram
   end
 end
