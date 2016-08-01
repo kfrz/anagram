@@ -45,7 +45,7 @@ The project should respond on the following endpoints:
 - `DELETE /words/:word.json`: Deletes a single word from the corpus. Use `?and_anagrams=true` to also delete all of that word's anagrams.
 - `DELETE /words.json`: Deletes all contents of the corpus.
 - `GET /words/stats.json`: Returns a count of words in the corpus, and min/max/median/average word length.
-- `GET /anagrams/numerous.json`: Returns the words with the highest anagram count. Use `?top=3` to return the top 3 words. Defaults to 1.
+- `GET /anagrams/numerous.json`: Returns the words with the highest anagram count.
 - `GET /anagrams/:size.json`: Returns a list of all anagram groups of size >= :size.
 
 All data is expected to be passed as JSON. 
