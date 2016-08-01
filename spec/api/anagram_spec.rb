@@ -7,40 +7,46 @@ describe Anagram::API do
     Anagram::API
   end
 
+  # Reset the data store
+  Redis.current.flushdb
+
   let(:word_list) { ["read", "used", "dues", "east", "eats", "seat"] }
 
+  before do
+    post '/words.json', 'words': word_list
+  end
+
   it 'fetches anagrams for a given word' do
-    pending
-    get '/anagrams/read.json'
+    # returns anagrams for this word but doesnt check if it's extant
+    # it should add to the set
+    get '/anagrams/sued'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq('').to_json
+    expect(JSON.parse(last_response.body)).to eq(['dues', 'used'])
   end
 
   it 'fetches anagrams with a limit on results' do
-    pending
-    get '/anagrams/read.json?limit=1'
+    get '/anagrams/desu.json?limit=1'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq('').to_json
+    expect(JSON.parse(last_response.body)).to eq(['dues'])
   end
 
   it 'deletes a word and all of its anagrams' do
-    pending
-    delete '/anagrams/read.json'
+    delete '/anagrams/used'
     expect(last_response.status).to eq(200)
-    expect(words).to eq('')
+    expect(Redis.current.smembers('desu').length).to eq(0)
   end
 
   it 'gets the word with the highest anagram count' do
     pending
     get '/anagrams/top.json'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq('').to_json
+    expect(last_response.body).to eq('')
   end
 
   it 'gets all anagram groups with given size' do
     pending
     get '/anagrams/4'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq('').to_json
+    expect(last_response.body).to eq('')
   end
 end
