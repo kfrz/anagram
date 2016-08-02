@@ -25,6 +25,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.0.2)
+    curb (0.9.3)
     descendants_tracker (0.0.4)
       thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
@@ -165,6 +166,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   capybara
+  curb
   grape
   grape-entity
   grape-swagger
