@@ -10,36 +10,36 @@ describe Anagram::API do
   # Reset the data store
   Redis.current.flushdb
 
-  let(:word_list) { ['read','used','dues','east','eats','seat'] }
+  let(:word_list) { (['read','used','dues','east','eats','seat']).to_json }
 
   it 'adds a word to the corpus' do
     post '/words.json', 'words': word_list
     expect(last_response.status).to eq(201)
-    expect(JSON.parse(last_response.body)).to eq(['read','used','dues','east','eats','seat'])
+    expect(last_response.body).to eq((['read','used','dues','east','eats','seat']).to_json)
   end
 
   it 'does not add words that exist already' do
     post '/words.json', 'words': word_list
     expect(last_response.status).to eq(201)
-    expect(JSON.parse(last_response.body)).to eq(['read','used','dues','east','eats','seat'])
+    expect(last_response.body).to eq((['read','used','dues','east','eats','seat']).to_json)
   end
 
   it 'gets all words' do
     get '/words.json'
     expect(last_response.status).to eq(200)
-    expect(JSON.parse(last_response.body)).to eq(['dues','east','eats','read','seat','used'])
+    expect(last_response.body).to eq((['dues','east','eats','read','seat','used']).to_json)
   end
 
   it 'returns word count stats' do
     get '/words/stats.json'
     expect(last_response.status).to eq(200)
-    expect(JSON.parse(last_response.body)).to eq('{"stats":{"count":6}}')
+    expect(last_response.body).to eq(('{"stats":{"count":6}}').to_json)
   end
 
   it 'deletes a single word from the corpus' do
     delete '/words/east'
     expect(last_response.status).to eq(200)
-    expect(JSON.parse(last_response.body)).to eq(['eats','seat'])
+    expect(last_response.body).to eq((['eats','seat']).to_json)
   end
 
   it 'deletes all words from the corpus' do

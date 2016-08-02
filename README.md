@@ -60,12 +60,12 @@ Using CURL and assuming the default port of localhost:3000
 
 ```{bash}
 # Adding words to the corpus
-$ curl -i -X POST -d '{ "words": ["read", "dear", "dare"] }' http://localhost:3000/words.json
+$ curl -i -X POST localhost:3000/words -d words='["read", "dear", "dare"]'
 HTTP/1.1 201 Created
 ...
 
 # Fetching anagrams
-$ curl -i http//localhost:3000/anagrams/read.json
+$ curl -i http//localhost:3000/anagrams/read
 HTTP/1.1 200 OK
 ...
 {
@@ -77,7 +77,7 @@ HTTP/1.1 200 OK
 
 
 # Specifying maximum number of anagrams
-$ curl -i http://localhost:3000/anagrams/read.json?limit=1
+$ curl -i http://localhost:3000/anagrams/read?limit=1
 HTTP/1.1 200 OK
 ...
 {
@@ -88,22 +88,22 @@ HTTP/1.1 200 OK
 
 
 # Deleting a single word from corpus
-$ curl -i -X DELETE http://localhost:3000/words/read.json
+$ curl -i -X DELETE http://localhost:3000/words/read
 HTTP/1.1 200 OK
 ...
 
 # Deleting a single word from corpus, and all of its anagrams
-$ curl -i -X DELETE http://localhost:3000/anagrams/read.json
+$ curl -i -X DELETE http://localhost:3000/anagrams/read
 HTTP/1.1 200 OK
 ...
 
 # Deleting all words in corpus
-$ curl -i -X DELETE http://localhost:3000/words.json
+$ curl -i -X DELETE http://localhost:3000/words
 HTTP/1.1 204 No Content
 ...
 
 # Getting stats about words in corpus
-$ curl -i http://localhost:3000/words/stats.json
+$ curl -i http://localhost:3000/words/stats
 HTTP/1.1 200 OK
 ...
 {
