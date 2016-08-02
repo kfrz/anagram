@@ -5,8 +5,6 @@
 ## Try it Out! 
 I have deployed a public API accessible on Heroku at the following URL: `https://anagram-kf.herokuapp.com/`
 
-Note
-
 You can try it out immediately like so:
 
 ```{bash}
