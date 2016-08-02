@@ -54,7 +54,7 @@ The project should respond on the following endpoints:
 - `DELETE /api/words/:word`: Deletes a single word from the corpus, returns all other anagrams remaining with the same key.
 - `DELETE /api/anagrams/:word` Use to delete a word and all of that word's anagrams.
 - `DELETE /api/words`: Deletes all contents of the corpus.
-- `GET /api/words/stats`: Returns a count of words in the corpus, and min/max/median/mean word length.
+- `GET /api/words/stats`: Returns a count of words in the corpus, and min/max/median/mean word length. Returns `500` if no words in corpus.
 - `GET /api/anagrams`: Returns a sorted list of all anagram keys.
 
 All data is expected to be passed as JSON. 
