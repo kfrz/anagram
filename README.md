@@ -135,7 +135,6 @@ HTTP/1.1 200 OK
 Upon inspection and pondering of the action logic and structure required I decided this was a perfect use case for redis-rb. I'll wire up Grape on Rack, then get redis connected, wrap it in docker then gitlab-ci then heroku. Using redis should allow for blazing fast lookups. I'm currently just implementing a singular corpus but it could be fun to implement different sub-dictionaries or something. Tradeoffs here are maybe complexity but redis is dead simple to set up and so far I've been successful. I actually would have had to do more work to do this in pg.
 
 Other tradeoffs for now: I'm not thinking about security or authentication. Just a simple API design with some added functionality. 
-```
 
 ## Development
 Feel free to clone/fork/download and hack away. If you've added some useful functionality or fixed a bug -- open a pull request!
