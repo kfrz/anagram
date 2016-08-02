@@ -1,6 +1,7 @@
 module Anagram
   class API < Grape::API
     format :json
+    prefix 'api'
 
     mount ::Anagram::Ping
     mount ::Anagram::Word

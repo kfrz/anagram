@@ -1,18 +1,9 @@
+require 'helpers/stats'
 module Anagram
   class Word < Grape::API
-    helpers do
-      def all_words
-        keys = Redis.current.keys('*')
-        words = []
-        keys.each do |key|
-          words.push(Redis.current.smembers(key))
-        end
-        words.zip.flatten.compact.sort
-      end
-    end
-
     resources :words do
       format :json
+
       desc 'adds a word to the corpus'
       params do
         requires :words, type: String, desc: 'Words'
@@ -20,9 +11,7 @@ module Anagram
       post do
         words = JSON.parse(params[:words])
         words.each do |word|
-         key = word.split('').sort.join
-         Redis.current.sadd(key, word)
-         Redis.current.smembers(key)
+          add_word(key_gen(word), word)
         end
       end
 
@@ -34,9 +23,8 @@ module Anagram
       desc 'deletes a single word from the corpus'
       delete '/:word' do
         word = params[:word]
-        key = word.split('').sort.join
-        Redis.current.srem(key, word)
-        Redis.current.smembers(key).sort
+        Redis.current.srem(key_gen(word), word)
+        Redis.current.smembers(key_gen(word)).sort
       end
 
       desc 'deletes all words from the corpus'
@@ -44,14 +32,25 @@ module Anagram
         if Redis.current.flushdb
           body false
         end
-        # TODO Add error handling
       end
 
-     desc 'returns word count statistics'
+      desc 'returns word count statistics'
       get '/stats' do
-        @word_count = all_words.length
-        { stats: {count: @word_count} }
+        corpus = all_words
+        @word_count = corpus.size
+        @min_length = corpus.min_by{ |x| x.size }.size
+        @max_length = corpus.max_by{ |x| x.size }.size
+        @median = median_word_length
+        @mean = mean_word_length
+        { stats: {
+            word_count: @word_count,
+            min_length: @min_length,
+            max_length: @max_length,
+            median: @median,
+            mean: @mean
+          } }
       end
+
     end
   end
 end
