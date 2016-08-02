@@ -10,9 +10,9 @@ Note
 You can try it out immediately like so:
 
 ```{bash}
-$ curl -i -X POST https://anagram-kf.herokuapp.com/words -d words='["east","seat"]
+$ curl -i -X POST https://anagram-kf.herokuapp.com/api/words -d words='["east","seat"]'
 ...
-$ curl -i https://anagram-kf.herokuapp.com/anagrams
+$ curl -i https://anagram-kf.herokuapp.com/api/anagrams/east
 ```
 
 This will `POST` two words to the corpus which are anagrams of each other, then `GET` all of the anagrams in the corpus. 
