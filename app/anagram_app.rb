@@ -14,7 +14,8 @@ module Anagram
         use Rack::Cors do
           allow do
             origins '*'
-            resource '*', headers: :any, methods: :get
+            resource ':anagrams/*', headers: :any, methods: :any
+            resource ':words/*', headers: :any, methods: :any
           end
         end
         run Anagram::App.new

@@ -1,4 +1,3 @@
-require 'byebug'
 module Anagram
   class Word < Grape::API
     helpers do
@@ -11,24 +10,24 @@ module Anagram
         words.zip.flatten.compact.sort
       end
     end
-    format :json
+
     resources :words do
+      format :json
       desc 'adds a word to the corpus'
       params do
-        requires :words, type: Array, desc: 'Words'
+        requires :words, type: String, desc: 'Words'
       end
       post do
-        words = params[:words]
+        words = JSON.parse(params[:words])
         words.each do |word|
-          key = word.split('').sort.join
-          Redis.current.sadd(key, word)
-          Redis.current.smembers(key)
+         key = word.split('').sort.join
+         Redis.current.sadd(key, word)
+         Redis.current.smembers(key)
         end
       end
 
       desc 'returns all words in alphabetical order'
       get do
-        content_type 'application/json'
         all_words
       end
 
@@ -49,9 +48,9 @@ module Anagram
       end
 
      desc 'returns word count statistics'
-      get '/stats.json' do
+      get '/stats' do
         @word_count = all_words.length
-        { stats: {count: @word_count} }.to_json
+        { stats: {count: @word_count} }
       end
     end
   end

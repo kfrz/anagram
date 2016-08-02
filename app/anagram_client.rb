@@ -6,16 +6,18 @@ module Anagram
   class API < Grape::API
     version 'v1', using: :header, vendor: 'kfrz'
     format :json
-    prefix :api
 
-    def initialize
-      @word = ""
+    def initialize(args=[])
+      options = parse_options(args)
+
+      @dictionary = options[:dictionary] || dictionary.txt
+      @host = options[:host] || 'localhost'
+      @port = options[:port] || '3000'
       Redis.current = $redis
     end
 
-    def self.word
-      Redis.current.set('word','mapped')
-      Redis.current.get('word')
+    def post(path, query-nil, body=nil)
+      uri = build_uri(path, query)
     end
   end
 end

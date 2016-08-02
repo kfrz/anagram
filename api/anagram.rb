@@ -6,8 +6,13 @@ module Anagram
       end
     end
 
-    format :json
     resources :anagrams do
+      format :json
+      desc 'returns all anagram groups'
+      get do
+        Redis.current.keys('*')
+      end
+
       desc 'fetches anagrams for given word'
       params do
         requires :word, type: String, desc: 'Word to lookup'
@@ -20,7 +25,8 @@ module Anagram
           limit = params[:limit] - 1
         else limit = 100
         end
-        res = Redis.current.smembers(key).sort[0..limit]
+        @res = Redis.current.smembers(key).sort[0..limit]
+        { anagrams: @res }
       end
 
       desc 'deletes a word and all of its anagrams'
@@ -29,17 +35,7 @@ module Anagram
         key = key_gen(word)
         Redis.current.del(key)
       end
-
-      desc 'gets all anagram groups with given size'
-      get '/:size' do
-        size = params[:size]
-        @words =
-          # use jbuilder here. refactor
-          { "anagrams": {
-                          
-
-                        } }
-      end
+     end
     end
   end
 end
