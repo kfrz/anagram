@@ -35,7 +35,6 @@ module Anagram
         key = key_gen(word)
         Redis.current.del(key)
       end
-     end
     end
   end
 end

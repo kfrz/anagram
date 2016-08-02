@@ -33,7 +33,7 @@ describe Anagram::API do
   it 'returns word count stats' do
     get '/words/stats.json'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq(('{"stats":{"count":6}}').to_json)
+    expect(last_response.body).to eq(('{"stats":{"count":6}}'))
   end
 
   it 'deletes a single word from the corpus' do

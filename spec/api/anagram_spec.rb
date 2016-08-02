@@ -21,13 +21,13 @@ describe Anagram::API do
     # it should add to the set
     get '/anagrams/sued'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq((['dues', 'used']).to_json)
+    expect(last_response.body).to eq(('{"anagrams":["dues","used"]}'))
   end
 
   it 'fetches anagrams with a limit on results' do
     get '/anagrams/desu.json?limit=1'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq((['dues']).to_json)
+    expect(last_response.body).to eq(('{"anagrams":["dues"]}'))
   end
 
   it 'deletes a word and all of its anagrams' do
