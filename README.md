@@ -54,7 +54,7 @@ All data is expected to be passed as JSON.
 
 All words are anagrams of themselves. 
 
-###Example
+### Example
 
 Using CURL and assuming the default port of localhost:3000
 
