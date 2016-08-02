@@ -1,13 +1,9 @@
+require 'helpers/stats'
 module Anagram
   class Anagram < Grape::API
-    helpers do
-      def key_gen(word)
-        key = word.split('').sort.join
-      end
-    end
-
     resources :anagrams do
       format :json
+
       desc 'returns all anagram groups'
       get do
         Redis.current.keys('*')
@@ -20,11 +16,9 @@ module Anagram
       end
       get '/:word' do
         key = key_gen(params[:word])
-        # Unless? Use sexier loop here
-        if params[:limit]
-          limit = params[:limit] - 1
-        else limit = 100
-        end
+        is_limit = params[:limit]
+        # if there's a limit passed, use it else use default 100
+        limit = is_limit ? (is_limit - 1) : 100
         @res = Redis.current.smembers(key).sort[0..limit]
         { anagrams: @res }
       end
@@ -33,7 +27,7 @@ module Anagram
       delete '/:word' do
         word = params[:word]
         key = key_gen(word)
-        Redis.current.del(key)
+        @res = Redis.current.del(key)
       end
     end
   end
