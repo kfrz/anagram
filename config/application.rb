@@ -10,6 +10,9 @@ Dir[File.expand_path('../../api/*.rb', __FILE__)].each do |f|
   require f
 end
 
+# This isn't very secure. 
+Rack::Utils.key_space_limit = 50000000
+
 require 'api'
 require 'anagram_app'
 

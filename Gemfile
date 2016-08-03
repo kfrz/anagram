@@ -19,12 +19,12 @@ gem 'nokogiri'
 gem 'redis', '~>3.2'
 
 group :development do
+  gem 'pry'
   gem 'rake'
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rack'
   gem 'rubocop'
-  gem 'byebug'
 end
 
 group :test do

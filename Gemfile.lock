@@ -13,7 +13,6 @@ GEM
       ice_nine (~> 0.11.0)
       thread_safe (~> 0.3, >= 0.3.1)
     builder (3.2.2)
-    byebug (9.0.5)
     capybara (2.7.1)
       addressable
       mime-types (>= 1.16)
@@ -163,7 +162,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug
   capybara
   grape
   grape-entity
@@ -175,6 +173,7 @@ DEPENDENCIES
   jbuilder
   json
   nokogiri
+  pry
   rack
   rack-contrib
   rack-cors
