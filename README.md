@@ -1,7 +1,7 @@
 # Anagram API
 [![build status](https://gitlab.com/kfrz/anagram/badges/master/build.svg)](https://gitlab.com/kfrz/anagram/commits/master)
 
-Anagram API is a technical evaluation project submitted by Keifer Furzland, for consideation by Ibotta in regards to a Platform Engineer position.
+Anagram API is a technical evaluation project submitted by Keifer Furzland, for consideration by Ibotta in regards to a Platform Engineer position.
 
 ## Try it Out! 
 I have deployed a public API accessible on Heroku at the following URL: `https://anagram-kf.herokuapp.com/`
@@ -141,7 +141,6 @@ Other tradeoffs for now: I'm not thinking about security or authentication. Just
 - Add support for proper noun vs non proper noun anagram sorting
 - Add endpoint to find word with most anagrams
 - Add endpoint to find anagrams of specific length
-- Secure Rack from `1337 h4xx0rs`
 
 ## Development
 Feel free to clone/fork/download and hack away. If you've added some useful functionality or fixed a bug -- open a pull request!
