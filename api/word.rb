@@ -1,10 +1,8 @@
-require 'helpers/stats'
+require 'helpers/word_helpers'
 module Anagram
   class Word < Grape::API
     resources :words do
-      format :json
-
-      desc 'adds a word to the corpus'
+      desc 'adds words to the corpus'
       params do
         requires :words, type: String, desc: 'Words'
       end
@@ -13,6 +11,21 @@ module Anagram
         words.each do |word|
           add_word(key_gen(word), word)
         end
+      end
+
+      desc 'adds a text file of words to the dictionary'
+      params do
+        requires :dictionary, type: File, desc: 'file'
+      end
+      post 'upload' do
+        { filename: params[:dictionary][:filename],
+          size: params[:dictionary][:tempfile].size }
+
+        dict = (params[:dictionary])
+        words = parse_dict(dict)
+         words.each do |word|
+           add_word(key_gen(word), word)
+         end
       end
 
       desc 'returns all words in alphabetical order'

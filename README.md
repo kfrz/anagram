@@ -1,6 +1,7 @@
 # Anagram API
 [![build status](https://gitlab.com/kfrz/anagram/badges/master/build.svg)](https://gitlab.com/kfrz/anagram/commits/master)
 
+Anagram API is a technical evaluation project submitted by Keifer Furzland, for consideation by Ibotta in regards to a Platform Engineer position.
 
 ## Try it Out! 
 I have deployed a public API accessible on Heroku at the following URL: `https://anagram-kf.herokuapp.com/`
@@ -45,6 +46,7 @@ If this doesn't work, feel free to open an issue or fix it and submit a pull req
 The project should respond on the following endpoints:
 - `GET /api/words`: Returns all words in corpus, sorted in alphabetical order.
 - `POST /api/words`: Takes a JSON array of English-language words and adds them to the corpus.
+- `POST /api/words/upload`: Upload a text file of words, newline delimited, for bulk addition.
 - `GET /api/anagrams/:word?limit=5`:
   - Returns a JSON array of English-language words that are anagrams of the word passed in the URL.
   - Respects a query param `?limit` that indicates the maximum number of results to return. 
@@ -66,6 +68,11 @@ Using CURL and assuming the default port of localhost:3000
 ```{bash}
 # Adding words to the corpus
 $ curl -i -X POST localhost:3000/api/words -d words='["read", "dear", "dare"]'
+HTTP/1.1 201 Created
+...
+
+# Uploading a dictionary file
+$ curl -i -X POST --form "dictionary=@dictionary.txt" localhost:3000/api/words/upload
 HTTP/1.1 201 Created
 ...
 
@@ -120,22 +127,21 @@ HTTP/1.1 200 OK
     "mean": 8 
   }
 }
-
-# Getting the word with the highest anagram count
-$ curl -i http://localhost:3000/api/anagrams/top.json
-HTTP/1.1 200 OK
-...
-{
-  "rate": 3
-}
 ```
 
 ## Implementation details
 
 Upon inspection and pondering of the action logic and structure required I decided this was a perfect use case for redis-rb. I'll wire up Grape on Rack, then get redis connected, wrap it in docker then gitlab-ci then heroku. Using redis should allow for blazing fast lookups. I'm currently just implementing a singular corpus but it could be fun to implement different sub-dictionaries or something. Tradeoffs here are maybe complexity but redis is dead simple to set up and so far I've been successful. I actually would have had to do more work to do this in pg.
 
-Other tradeoffs for now: I'm not thinking about security or authentication. Just a simple API design with some added functionality. 
-```
+Other tradeoffs for now: I'm not thinking about security or authentication. Just a simple API design with some added functionality.
+
+### Roadmap:
+
+- Refactor uploading methods into a FileUploader class. 
+- Add support for proper noun vs non proper noun anagram sorting
+- Add endpoint to find word with most anagrams
+- Add endpoint to find anagrams of specific length
+- Secure Rack from `1337 h4xx0rs`
 
 ## Development
 Feel free to clone/fork/download and hack away. If you've added some useful functionality or fixed a bug -- open a pull request!
