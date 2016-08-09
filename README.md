@@ -1,8 +1,6 @@
 # Anagram API
 [![build status](https://gitlab.com/kfrz/anagram/badges/master/build.svg)](https://gitlab.com/kfrz/anagram/commits/master)
 
-Anagram API is a technical evaluation project submitted by Keifer Furzland, for consideation by Ibotta in regards to a Platform Engineer position.
-
 ## Try it Out! 
 I have deployed a public API accessible on Heroku at the following URL: `https://anagram-kf.herokuapp.com/`
 
