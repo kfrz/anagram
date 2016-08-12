@@ -10,20 +10,11 @@ module Anagram
     end
 
     def self.instance
-      @instance ||= Rack::Builder.new do
-        use Rack::Cors do
-          allow do
-            origins '*'
-            resource ':anagrams/*', headers: :any, methods: :any
-            resource ':words/*', headers: :any, methods: :any
-          end
-        end
-        run Anagram::App.new
-      end.to_app
+      @instance ||= build_instance
+      run Anagram::App.new
     end
 
     def call(env)
-      # api
       response = Anagram::API.call(env)
 
       # Check if the App wants us to pass the response along to others
@@ -43,6 +34,20 @@ module Anagram
         [response[0], content[1], content[2]]
       else
         response
+      end
+    end
+
+    private
+
+    def build_instance
+      Rack::Builder.new do
+        use Rack::Cors do
+          allow do
+            origins '*'
+            resource ':anagrams/*', headers: :any, methods: [:get, :delete]
+            resource ':words/*', headers: :any, methods: :any
+          end
+        end
       end
     end
   end
