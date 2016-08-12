@@ -3,19 +3,6 @@
 
 Anagram API is a technical evaluation project submitted by Keifer Furzland, for consideration by Ibotta in regards to a Platform Engineer position.
 
-## Try it Out! 
-I have deployed a public API accessible on Heroku at the following URL: `https://anagram-kf.herokuapp.com/`
-
-You can try it out immediately like so:
-
-```{bash}
-$ curl -i -X POST https://anagram-kf.herokuapp.com/api/words -d words='["east","seat"]'
-...
-$ curl -i https://anagram-kf.herokuapp.com/api/anagrams/east
-```
-
-This will `POST` two words to the corpus which are anagrams of each other, then `GET` all of the anagrams in the corpus. 
-
 ## Local Installation 
 
 You'll need an unix-like system and Docker with [Docker Compose](https://docs.docker.com/compose/) installed. 
