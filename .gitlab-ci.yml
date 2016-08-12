@@ -16,4 +16,4 @@ production:
     - gem install dpl
     - dpl --provider=heroku --app=anagram-kf --api-key=$HEROKU_PRODUCTION_API_KEY
   only:
-    - master 
+    - tags 

@@ -1,5 +1,7 @@
 # Anagram API
 [![build status](https://gitlab.com/kfrz/anagram/badges/master/build.svg)](https://gitlab.com/kfrz/anagram/commits/master)
+[![Code Climate](https://codeclimate.com/github/kfrz/anagram/badges/gpa.svg)](https://codeclimate.com/github/kfrz/anagram)
+[![Test Coverage](https://codeclimate.com/github/kfrz/anagram/badges/coverage.svg)](https://codeclimate.com/github/kfrz/anagram/coverage)
 
 Anagram API is a technical evaluation project submitted by Keifer Furzland, for consideration by Ibotta in regards to a Platform Engineer position.
 
