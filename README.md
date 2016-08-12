@@ -3,8 +3,6 @@
 [![Code Climate](https://codeclimate.com/github/kfrz/anagram/badges/gpa.svg)](https://codeclimate.com/github/kfrz/anagram)
 [![Test Coverage](https://codeclimate.com/github/kfrz/anagram/badges/coverage.svg)](https://codeclimate.com/github/kfrz/anagram/coverage)
 
-Anagram API is a technical evaluation project submitted by Keifer Furzland, for consideration by Ibotta in regards to a Platform Engineer position.
-
 ## Local Installation 
 
 You'll need an unix-like system and Docker with [Docker Compose](https://docs.docker.com/compose/) installed. 
