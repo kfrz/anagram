@@ -1,4 +1,4 @@
-require 'helpers/stats'
+require 'helpers/word_helpers.rb'
 module Anagram
   class Anagram < Grape::API
     resources :anagrams do

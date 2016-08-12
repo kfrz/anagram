@@ -16,8 +16,8 @@ module Anagram
       Redis.current = $redis
     end
 
-    def post(path, query-nil, body=nil)
-      uri = build_uri(path, query)
+    def post(path, query=nil)
+      build_uri(path, query)
     end
   end
 end

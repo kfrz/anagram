@@ -35,7 +35,7 @@ module Anagram
         center = arr.length/2
         # if even we have to split the difference
         # if not, we have a perfect median!
-        res = arr.length.even? ? (arr[center] + arr[center+1])/2 : arr[center]
+        arr.length.even? ? (arr[center] + arr[center+1])/2 : arr[center]
       end
 
       def mean_word_length
@@ -43,7 +43,7 @@ module Anagram
         size = arr.length
         # two methods to deliver rounded mean, same logic. I prefer the second.
         # res = '%2f' % (arr.inject { |sum, el| sum + el }.to_f / size)
-        res = '%.2f' % (arr.inject(:+).to_f / size)
+        '%.2f' % (arr.inject(:+).to_f / size)
       end
     end
   end

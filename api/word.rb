@@ -18,9 +18,6 @@ module Anagram
         requires :dictionary, type: File, desc: 'file'
       end
       post 'upload' do
-        { filename: params[:dictionary][:filename],
-          size: params[:dictionary][:tempfile].size }
-
         dict = (params[:dictionary])
         words = parse_dict(dict)
          words.each do |word|

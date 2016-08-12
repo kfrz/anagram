@@ -5,7 +5,7 @@ module Anagram
     get '/ping.json' do
       Redis.current.set("ping", "pong")
       pong = Redis.current.get("ping")
-      { "ping": pong }
+      { "ping":  pong }
     end
   end
 end
