@@ -1,4 +1,3 @@
-require 'helpers/word_helpers.rb'
 module Anagram
   class Anagram < Grape::API
     resources :anagrams do
@@ -6,7 +5,7 @@ module Anagram
 
       desc 'returns all anagram groups'
       get do
-        Redis.current.keys('*')
+        Corpus.current.get_anagrams
       end
 
       desc 'fetches anagrams for given word'
@@ -15,19 +14,13 @@ module Anagram
         optional :limit, type: Integer, desc: 'Limit number of results'
       end
       get '/:word' do
-        key = key_gen(params[:word])
-        is_limit = params[:limit]
-        # if there's a limit passed, use it else use default 100
-        limit = is_limit ? (is_limit - 1) : 100
-        @res = Redis.current.smembers(key).sort[0..limit]
-        { anagrams: @res }
+        limit = params[:limit] ? params[:limit] - 1 : 100
+        Corpus.current.get_anagrams(params[:word], limit)
       end
 
       desc 'deletes a word and all of its anagrams'
       delete '/:word' do
-        word = params[:word]
-        key = key_gen(word)
-        @res = Redis.current.del(key)
+        Corpus.current.delete(params[:word], true)
       end
     end
   end

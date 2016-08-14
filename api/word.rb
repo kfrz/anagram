@@ -1,4 +1,3 @@
-require 'helpers/word_helpers'
 module Anagram
   class Word < Grape::API
     resources :words do
@@ -8,9 +7,7 @@ module Anagram
       end
       post do
         words = JSON.parse(params[:words])
-        words.each do |word|
-          add_word(key_gen(word), word)
-        end
+        Corpus.current.add_words(words)
       end
 
       desc 'adds a text file of words to the dictionary'
@@ -18,49 +15,33 @@ module Anagram
         requires :dictionary, type: File, desc: 'file'
       end
       post 'upload' do
-        dict = (params[:dictionary])
-        words = parse_dict(dict)
-         words.each do |word|
-           add_word(key_gen(word), word)
-         end
+        Corpus.current.add_dict(params[:dictionary])
       end
 
       desc 'returns all words in alphabetical order'
       get do
-        all_words
+        Corpus.current.all_words
       end
 
       desc 'deletes a single word from the corpus'
       delete '/:word' do
-        word = params[:word]
-        Redis.current.srem(key_gen(word), word)
-        Redis.current.smembers(key_gen(word)).sort
+        Corpus.current.delete(params[:word])
       end
 
       desc 'deletes all words from the corpus'
       delete '' do
-        if Redis.current.flushdb
+        if Corpus.current.clean
           body false
         end
       end
 
-      desc 'returns word count statistics'
+      desc 'return stats about the corpus'
+      # params do
+      #   optional :median, :mean, :count, :length, type: Boolean, desc: 'Options'
       get '/stats' do
-        corpus = all_words
-        @word_count = corpus.size
-        @min_length = corpus.min_by{ |x| x.size }.size
-        @max_length = corpus.max_by{ |x| x.size }.size
-        @median = median_word_length
-        @mean = mean_word_length
-        { stats: {
-            word_count: @word_count,
-            min_length: @min_length,
-            max_length: @max_length,
-            median: @median,
-            mean: @mean
-          } }
+        stats = Stats.new(Corpus.current)
+        stats.stats
       end
-
     end
   end
 end
