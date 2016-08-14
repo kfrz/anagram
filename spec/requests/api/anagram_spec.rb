@@ -8,8 +8,7 @@ describe Anagram::API do
   end
 
   # Reset the data store
-  Redis.current.flushdb
-
+  let(:corpus) { Anagram::Corpus.new }
   let(:word_list) { (["read", "used", "dues", "east", "eats", "seat"]).to_json }
 
   before do

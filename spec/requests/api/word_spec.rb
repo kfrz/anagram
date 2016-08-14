@@ -8,16 +8,17 @@ describe Anagram::API do
   end
 
   # Reset the data store
-  Redis.current.flushdb
-
   let(:word_list) { (['read','used','dues','east','eats','seat']) }
   let(:stat_block) {'{"stats":{"word_count":8,"min_length":4,"max_length":6,"median":4,"mean":"4.50"}}'}
   let(:dict_block) {(['actors','costar'])}
+  let(:full_corpus) do
+    word_list.zip(dict_block).flatten.compact.sort.to_json
+  end
 
   it 'adds a word to the corpus with valid json' do
     post '/api/words', 'words': word_list.to_json
     expect(last_response.status).to eq(201)
-    expect(last_response.body).to eq(word_list.to_json)
+    expect(last_response.body).to eq(word_list.sort.to_json)
   end
 
   it 'adds words from a text file uploaded' do
@@ -25,13 +26,13 @@ describe Anagram::API do
     f = Rack::Test::UploadedFile.new(path, 'text/plain', true)
     post '/api/words/upload', 'dictionary': f
     expect(last_response.status).to eq(201)
-    expect(last_response.body).to eq(dict_block.to_json)
+    expect(last_response.body).to eq(full_corpus)
   end
 
   it 'does not add words that exist already' do
     post '/api/words', 'words': word_list.to_json
     expect(last_response.status).to eq(201)
-    expect(last_response.body).to eq(word_list.to_json)
+    expect(last_response.body).to eq(full_corpus)
   end
 
   it 'returns an error with invalid json' do
@@ -43,7 +44,7 @@ describe Anagram::API do
   it 'gets all words' do
     get '/api/words'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq(word_list.zip(dict_block).flatten.compact.sort.to_json)
+    expect(last_response.body).to eq(full_corpus)
   end
 
   it 'returns word count stats' do
@@ -55,7 +56,7 @@ describe Anagram::API do
   it 'deletes a single word from the corpus' do
     delete '/api/words/east'
     expect(last_response.status).to eq(200)
-    expect(last_response.body).to eq((['eats','seat']).to_json)
+    expect(last_response.body).to eq('true')
   end
 
   it 'deletes all words from the corpus' do

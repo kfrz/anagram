@@ -1,7 +1,6 @@
 module Anagram
   class App
     def initialize
-      @filenames = ['', '.html', 'index.html', '/index.html']
       @rack_static = ::Rack::Static.new(
         lambda { [404, {}, []] },
         root: File.expand_path('../../public', __FILE__),
